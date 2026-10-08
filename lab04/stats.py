@@ -13,8 +13,24 @@ def parse_record(line: str) -> dict:
 
 
 def read_valid(lines: list[str]) -> list[dict]:
+    a = []
     for line in lines:
         try:
-            parse_record(line)
+            d = parse_record(line)
+            a.append(d)
         except ValueError:
             continue
+    return a
+
+
+def average_city(records: list[dict]) -> dict:
+    total = {}
+    count = {}
+    mid_temps = {}
+    for record in records:
+        city, temp, date = record.values()
+        total[city] = total.get(city, 0) + temp
+        count[city] = count.get(city, 0) + 1
+    for city in total:
+        mid_temps[city] = f'{(total[city] / count[city]):.1f}'
+    return mid_temps
