@@ -1,4 +1,4 @@
-def parse_record(line: str) -> dict:
+def parse_record(line):
     if len(line.split(';')) != 3:
         raise ValueError('Передано не три поля')
     city, temp, date = line.split(';')
@@ -12,7 +12,7 @@ def parse_record(line: str) -> dict:
     return total
 
 
-def read_valid(lines: list[str]) -> list[dict]:
+def read_valid(lines):
     valid_lines = []
     for line in lines:
         try:
@@ -23,7 +23,7 @@ def read_valid(lines: list[str]) -> list[dict]:
     return valid_lines
 
 
-def average_by_city(records: list[dict]) -> dict:
+def average_by_city(records):
     total = {}
     count = {}
     mid_temps = {}
@@ -36,7 +36,7 @@ def average_by_city(records: list[dict]) -> dict:
     return mid_temps
 
 
-def warmest_city(records: list[dict]) -> str:
+def warmest_city(records):
     mid_temps = average_by_city(records)
     best = ''
     for city in mid_temps:
