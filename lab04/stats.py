@@ -34,3 +34,12 @@ def average_city(records: list[dict]) -> dict:
     for city in total:
         mid_temps[city] = f'{(total[city] / count[city]):.1f}'
     return mid_temps
+
+
+def warmest_city(records: list[dict]) -> str:
+    mid_temps = average_city(records)
+    best = ''
+    for city in mid_temps:
+        if mid_temps[city] > mid_temps.get(best, '0'):
+            best = city
+    return best
