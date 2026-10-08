@@ -1,9 +1,13 @@
 def parse_record(line):
+    if line == '':
+        raise ValueError('Передана пустая строка')
     if len(line.split(';')) != 3:
         raise ValueError('Передано не три поля')
     city, temp, date = line.split(';')
     if city == '' or date == '':
         raise ValueError('Поля город или дата пустые')
+    if city != city.strip() or temp != temp.strip() or date != date.strip():
+        raise ValueError('Лишние пробелы')
     try:
         temp = float(temp)
     except ValueError:
@@ -40,6 +44,6 @@ def warmest_city(records):
     mid_temps = average_by_city(records)
     best = ''
     for city in mid_temps:
-        if mid_temps[city] > mid_temps.get(best, 0):
+        if best == '' or mid_temps[city] > mid_temps[best]:
             best = city
     return best
