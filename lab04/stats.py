@@ -8,7 +8,7 @@ def parse_record(line):
         temp = float(temp)
     except ValueError:
         raise ValueError('Температура не число')
-    total = {'city': city, 'temp': temp, 'date': date}
+    total = {'city': city, 'temperature': temp, 'date': date}
     return total
 
 
@@ -32,7 +32,7 @@ def average_by_city(records):
         total[city] = total.get(city, 0) + temp
         count[city] = count.get(city, 0) + 1
     for city in total:
-        mid_temps[city] = f'{(total[city] / count[city]):.1f}'
+        mid_temps[city] = float(f'{(total[city] / count[city]):.1f}')
     return mid_temps
 
 
@@ -40,6 +40,6 @@ def warmest_city(records):
     mid_temps = average_by_city(records)
     best = ''
     for city in mid_temps:
-        if mid_temps[city] > mid_temps.get(best, '0'):
+        if mid_temps[city] > mid_temps.get(best, 0):
             best = city
     return best
