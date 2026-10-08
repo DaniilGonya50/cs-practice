@@ -42,6 +42,6 @@ def warmest_city(records):
     mid_temps = average_by_city(records)
     best = ''
     for city in mid_temps:
-        if best == '' or (mid_temps[city] >= mid_temps[best] and city < best):
+        if best == '' or mid_temps[city] > mid_temps[best] or (mid_temps[city] == mid_temps[best] and city < best):
             best = city
     return best
