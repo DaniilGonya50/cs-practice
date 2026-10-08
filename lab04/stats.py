@@ -11,4 +11,10 @@ def parse_record(line: str) -> dict:
     total = {'city': city, 'temp': temp, 'date': date}
     return total
 
-    
+
+def read_valid(lines: list[str]) -> list[dict]:
+    for line in lines:
+        try:
+            parse_record(line)
+        except ValueError:
+            continue
