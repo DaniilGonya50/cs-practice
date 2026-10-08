@@ -1,6 +1,4 @@
 def parse_record(line):
-    if line == '':
-        raise ValueError('Передана пустая строка')
     if len(line.split(';')) != 3:
         raise ValueError('Передано не три поля')
     city, temp, date = line.split(';')
