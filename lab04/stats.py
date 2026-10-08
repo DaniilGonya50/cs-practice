@@ -13,17 +13,17 @@ def parse_record(line: str) -> dict:
 
 
 def read_valid(lines: list[str]) -> list[dict]:
-    a = []
+    valid_lines = []
     for line in lines:
         try:
             d = parse_record(line)
-            a.append(d)
+            valid_lines.append(d)
         except ValueError:
             continue
-    return a
+    return valid_lines
 
 
-def average_city(records: list[dict]) -> dict:
+def average_by_city(records: list[dict]) -> dict:
     total = {}
     count = {}
     mid_temps = {}
@@ -37,7 +37,7 @@ def average_city(records: list[dict]) -> dict:
 
 
 def warmest_city(records: list[dict]) -> str:
-    mid_temps = average_city(records)
+    mid_temps = average_by_city(records)
     best = ''
     for city in mid_temps:
         if mid_temps[city] > mid_temps.get(best, '0'):
