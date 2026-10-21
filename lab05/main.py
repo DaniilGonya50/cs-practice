@@ -2,8 +2,8 @@ from logstats import parse_event, count_levels, top_errors, format_report
 import sys
 
 
-path = input().strip()
-n = int(input())
+path = sys.stdin.readline()
+n = int(sys.stdin.readline())
 lines = []
 with open(path, encoding='utf-8') as log:
     for line in log:
