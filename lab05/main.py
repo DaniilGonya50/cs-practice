@@ -2,7 +2,7 @@ from logstats import parse_event, count_levels, top_errors, format_report
 import sys
 
 
-path = sys.stdin.readline()
+path = sys.stdin.readline().strip()
 n = 3
 lines = []
 with open(path, encoding='utf-8') as log:
