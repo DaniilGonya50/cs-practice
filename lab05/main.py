@@ -3,7 +3,7 @@ import sys
 
 
 path = sys.stdin.readline()
-n = int(sys.stdin.readline())
+n = 3
 lines = []
 with open(path, encoding='utf-8') as log:
     for line in log:

@@ -29,6 +29,8 @@ def top_errors(lines: list[str], n: int) -> list[list]:
             parsed = parse_event(line)
         except (ValueError, KeyError):
             continue
+        if parsed['level'] != 'ERROR':
+            continue
         msg = parsed['message']
         messages_count[msg] = messages_count.get(msg, 0) + 1
     result = sorted(messages_count.items(), key=lambda x: (-x[1], x[0]))
