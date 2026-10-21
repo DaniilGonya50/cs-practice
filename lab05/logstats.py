@@ -4,37 +4,46 @@ def parse_event(line: str) -> dict:
         raise ValueError
     if line[1] not in 'DEBUG INFO WARNING ERROR':
         raise ValueError
+    if line[0] == '' or line[1] == '' or line[2] == '':
+        raise ValueError
     data_line = {'time': line[0], 'level': line[1], 'message': line[2]}
     return data_line
 
 
 def count_levels(lines: list[str]) -> dict:
-    data_levels = {}
+    data_levels = {'BROKEN': 0, 'DEBUG': 0, 'ERROR': 0, 'WARNING': 0, 'INFO': 0,}
     for line in lines:
-        data_levels[line['level']] = data_levels.get(line['level'], 0) + 1
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            parsed = parse_event(line)
+            level = parsed['level']
+            data_levels[level] += 1
+        except (ValueError, KeyError):
+            data_levels['BROKEN'] += 1
     return data_levels
 
 
 def top_errors(lines: list[str], n: int) -> list[list]:
     messages_count = {}
     for line in lines:
-        if line['level'] != 'ERROR':
+        try:
+            parsed = parse_event(line)
+        except (ValueError, KeyError):
             continue
-        messages_count[line['message']] = messages_count.get(line['message'], 0) + 1
-    messages_count = [list(x) for x in messages_count.items()]
-    messages_count = sorted(messages_count, key=lambda x: (-x[1], x[0]))
-    return messages_count[:n]
+        msg = parsed['message']
+        messages_count[msg] = messages_count.get(msg, 0) + 1
+    result = sorted(messages_count.items(), key=lambda x: (-x[1], [0]))
+    return [[msg, count] for msg, count in result[:n]]
 
 
 def format_report(counts: dict, errors: list[list]) -> str:
-    str_error = ''
+    lines = ['Отчёт по журналу', '']
+    for level in sorted(counts.keys()):
+        lines.append(f'{level}: {counts[level]}')
+    lines.append('')
+    lines.append('Частые ошибки:')
     for error in errors:
-        str_error += f'- {error[0].strip()} - {error[1]}\n'
-    return f'''Отчёт по журналу\n
-BROKEN: {counts['BROKEN']}
-DEBUG: {counts['DEBUG']}
-ERROR: {counts['ERROR']}
-INFO: {counts['INFO']}
-WARNING: {counts['WARNING']}\n
-Частые ошибки:
-{str_error}'''
+        lines.append(f'- {error[0].strip()} - {error[1]}')
+    return '\n'.join(lines) + '\n'

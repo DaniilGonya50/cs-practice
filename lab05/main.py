@@ -1,19 +1,23 @@
 from logstats import parse_event, count_levels, top_errors, format_report
+import sys
 
 
-path = input('Введите имя файла: ')
-n = int(input('Введите количество самых частых ошибок для вывода в отчет: '))
+path = input().strip()
+n = int(input())
 lines = []
 with open(path, encoding='utf-8') as log:
     for line in log:
-        if line == '':
-            continue
-        try:
-            lines.append(parse_event(line))
-        except:
-            lines.append({'time': 0, 'level': 'BROKEN', 'message': ''})
+        lines.append(line)
+
 counts = count_levels(lines)
 errors = top_errors(lines, n)
 report = format_report(counts, errors)
+
+total = sum(counts.values())
+error_count = counts.get('ERROR', 0)
+broken_count = counts.get('BROKEN', 0)
+print(total)
+print(error_count)
+print(broken_count)
 with open('report.txt', 'w', encoding='utf-8') as f:
     f.write(report)
