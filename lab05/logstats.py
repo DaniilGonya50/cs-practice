@@ -25,8 +25,16 @@ def top_errors(lines: list[str], n: int) -> list[list]:
     messages_count = sorted(messages_count, key=lambda x: (-x[1], x[0]))
     return messages_count[:n]
 
-    
-
 
 def format_report(counts: dict, errors: list[list]) -> str:
-    ...
+    str_error = ''
+    for error in errors:
+        str_error += f'- {error[0].strip()} - {error[1]}\n'
+    return f'''Отчёт по журналу\n
+BROKEN: {counts['BROKEN']}
+DEBUG: {counts['DEBUG']}
+ERROR: {counts['ERROR']}
+INFO: {counts['INFO']}
+WARNING: {counts['WARNING']}\n
+Частые ошибки:
+{str_error}'''
