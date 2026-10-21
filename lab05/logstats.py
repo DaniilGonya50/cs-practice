@@ -16,7 +16,16 @@ def count_levels(lines: list[str]) -> dict:
 
 
 def top_errors(lines: list[str], n: int) -> list[list]:
-    ...
+    messages_count = {}
+    for line in lines:
+        if line['level'] != 'ERROR':
+            continue
+        messages_count[line['message']] = messages_count.get(line['message'], 0) + 1
+    messages_count = [list(x) for x in messages_count.items()]
+    messages_count = sorted(messages_count, key=lambda x: (-x[1], x[0]))
+    return messages_count[:n]
+
+    
 
 
 def format_report(counts: dict, errors: list[list]) -> str:
