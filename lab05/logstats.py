@@ -11,17 +11,14 @@ def parse_event(line: str) -> dict:
 
 
 def count_levels(lines: list[str]) -> dict:
-    data_levels = {'BROKEN': 0, 'DEBUG': 0, 'ERROR': 0, 'WARNING': 0, 'INFO': 0,}
+    data_levels = {}
     for line in lines:
-        line = line.strip()
-        if not line:
-            continue
         try:
             parsed = parse_event(line)
             level = parsed['level']
-            data_levels[level] += 1
+            data_levels[level] = data_levels.get(level, 0) + 1
         except (ValueError, KeyError):
-            data_levels['BROKEN'] += 1
+            data_levels['BROKEN'] = data_levels.get('BROKEN', 0) + 1
     return data_levels
 
 
@@ -34,7 +31,7 @@ def top_errors(lines: list[str], n: int) -> list[list]:
             continue
         msg = parsed['message']
         messages_count[msg] = messages_count.get(msg, 0) + 1
-    result = sorted(messages_count.items(), key=lambda x: (-x[1], [0]))
+    result = sorted(messages_count.items(), key=lambda x: (-x[1], x[0]))
     return [[msg, count] for msg, count in result[:n]]
 
 
@@ -45,5 +42,5 @@ def format_report(counts: dict, errors: list[list]) -> str:
     lines.append('')
     lines.append('Частые ошибки:')
     for error in errors:
-        lines.append(f'- {error[0].strip()} - {error[1]}')
+        lines.append(f'- {error[0].strip()} — {error[1]}')
     return '\n'.join(lines) + '\n'
