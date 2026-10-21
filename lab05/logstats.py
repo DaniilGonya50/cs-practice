@@ -9,7 +9,10 @@ def parse_event(line: str) -> dict:
 
 
 def count_levels(lines: list[str]) -> dict:
-    ...
+    data_levels = {}
+    for line in lines:
+        data_levels[line['level']] = data_levels.get(line['level'], 0) + 1
+    return data_levels
 
 
 def top_errors(lines: list[str], n: int) -> list[list]:
