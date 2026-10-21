@@ -1,8 +1,8 @@
 from logstats import parse_event, count_levels, top_errors, format_report
 
 
-path = 'events.log' # input('Введите имя файла: ')
-n = 3 # int(input('Введите количество самых частых ошибок для вывода в отчет: '))
+path = input('Введите имя файла: ')
+n = int(input('Введите количество самых частых ошибок для вывода в отчет: '))
 lines = []
 with open(path, encoding='utf-8') as log:
     for line in log:
