@@ -13,6 +13,8 @@ def parse_event(line: str) -> dict:
 def count_levels(lines: list[str]) -> dict:
     data_levels = {}
     for line in lines:
+        if line.strip() == '':
+            continue
         try:
             parsed = parse_event(line)
             level = parsed['level']
