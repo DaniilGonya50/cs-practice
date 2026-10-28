@@ -2,9 +2,12 @@ def count_by_extension(paths):
     result = {}
     for path in paths:
         suf_ind = path.rfind('.')
-        if suf_ind == 0 or suf_ind == -1:
+        if suf_ind == 0:
             continue
-        result[path[suf_ind + 1:]] = result.get(path[suf_ind + 1:], 0) + 1
+        elif suf_ind == -1:
+            result[''] = result.get('', 0) + 1
+        else:
+            result[path[suf_ind + 1:].lower()] = result.get(path[suf_ind + 1:], 0) + 1
     return result
 
 
