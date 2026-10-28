@@ -22,9 +22,26 @@ def deepest_path(paths):
 
 
 def human_size(n_bytes):
-    ...
+    if n_bytes < 1024:
+        return f'{n_bytes} Б'
+    n_bytes /= 1024
+    k = 1
+    while n_bytes > 1024:
+        n_bytes /= 1024
+        k += 1
+    if k == 1:
+        return f'{n_bytes:.1f} КБ'
+    elif k == 2:
+        return f'{n_bytes:.1f} МБ'
+    elif k == 3:
+        return f'{n_bytes:.1f} ГБ'
+    else:
+        return f'{n_bytes:.1f} ТБ'
 
 
 paths = ["docs/report.PDF", "notes.txt", "docs/img/logo.png", "Makefile"]
 print(count_by_extension(paths))
 print(deepest_path(paths))
+print(human_size(900))
+print(human_size(1536))
+print(human_size(5 * 1024 * 1024))
