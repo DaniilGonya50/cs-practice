@@ -65,4 +65,17 @@ def parse_settings(lines):
     return result
 
 
-print(parse_settings(["# отчёт", "title: Отчёт за март", "decimals: 1", "active: true", "columns:", "  - город", "  - цена"]))
+def merge_by_key(rows, extra, key):
+    result = []
+    for row in rows:
+        lookup_value = row.get(key)
+        if lookup_value in extra:
+            new_row = dict(extra[lookup_value])
+            new_row.update(row)
+        else:
+            new_row = dict(row)
+        result.append(new_row)
+    return result
+
+
+print(merge_by_key([{"id": "1", "город": "Азов"}], {"1": {"регион": "Ростовская"}}, "id"))
