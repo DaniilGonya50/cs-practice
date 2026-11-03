@@ -78,4 +78,5 @@ def merge_by_key(rows, extra, key):
     return result
 
 
-print(merge_by_key([{"id": "1", "город": "Азов"}], {"1": {"регион": "Ростовская"}}, "id"))
+def records_to_json(records):
+    return json.dumps(records, indent=2, sort_keys=True, ensure_ascii=False)
