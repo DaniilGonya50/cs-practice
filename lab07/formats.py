@@ -29,11 +29,14 @@ def cast_value(value):
         return int(v)
     except ValueError:
         pass
-    v_float = v.replace(',', '.')
     try:
-        return float(v_float)
+        return float(v)
     except ValueError:
         pass
+    if ',' in v and v.count(',') == 1:
+        parts = v.split(',')
+        if parts[0].isdigit() and parts[1].isdigit():
+            return float(v.replace(',', '.'))
     return v
 
 
