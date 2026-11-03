@@ -29,8 +29,9 @@ def cast_value(value):
         return int(v)
     except ValueError:
         pass
+    v_float = v.replace(',', '.')
     try:
-        return float(v)
+        return float(v_float)
     except ValueError:
         pass
     return v
