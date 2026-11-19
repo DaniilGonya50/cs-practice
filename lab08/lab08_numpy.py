@@ -55,3 +55,31 @@ print(f'shape: {matrix[1:4, 2:5].shape}')
 print(f'Угловой блок 2х2 в правом нижнем углу: {matrix[-2:, -2:]}')
 print(f'shape: {matrix[-2:, -2:].shape}')
 
+changed_hours = hours.copy()
+changed_hours[2:5] = 99
+changed_hours[1::2] = -1
+print("changed_hours:", changed_hours)
+print("hours (исходный):", hours)
+print()
+
+changed_matrix = matrix.copy()
+changed_matrix[1] = 0
+changed_matrix[:, -1] = -1
+changed_matrix[1:4, 1:4] = 100
+print("changed_matrix:", changed_matrix)
+print("matrix (исходная):", matrix)
+print()
+
+numbers = np.arange(0, 12)
+table = numbers.reshape(3, 4)
+transposed = table.T
+
+print("numbers:", numbers)
+print("shape numbers:", numbers.shape)
+print()
+print("table:\n", table)
+print("shape table:", table.shape)
+print()
+print("transposed:\n", transposed)
+print("shape transposed:", transposed.shape)
+print()
